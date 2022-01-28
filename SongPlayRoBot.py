@@ -46,16 +46,14 @@ def start(client, message):
 
 @bot.on_message(filters.command(['mw']))
 def a(client, message):
-    query = ''
-    for i in message.command[1:]:
-        query += ' ' + str(i)
+    query = ''.join(' ' + str(i) for i in message.command[1:])
     print(query)
     m = message.reply('🔎 𝐒𝐞𝐚𝐫𝐜𝐡𝐢𝐧𝐠 𝐭𝐡𝐞 𝐬𝐨𝐧𝐠...')
     ydl_opts = {"format": "bestaudio[ext=m4a]"}
     try:
         results = []
         count = 0
-        while len(results) == 0 and count < 6:
+        while not results and count < 6:
             if count>0:
                 time.sleep(1)
             results = YoutubeSearch(query, max_results=1).to_dict()
@@ -86,7 +84,7 @@ def a(client, message):
         m.edit(
             "✖️ 𝐅𝐨𝐮𝐧𝐝 𝐍𝐨𝐭𝐡𝐢𝐧𝐠. 𝐒𝐨𝐫𝐫𝐲.\n\n𝐓𝐫𝐲 𝐀𝐧𝐨𝐭𝐡𝐞𝐫 𝐊𝐞𝐲𝐰𝐨𝐫𝐤 𝐎𝐫 𝐌𝐚𝐲𝐛𝐞 𝐒𝐩𝐞𝐥𝐥 𝐈𝐭 𝐏𝐫𝐨𝐩𝐞𝐫𝐥𝐲."
         )
-        print(str(e))
+        print(e)
         return
     m.edit("🔎 𝐅𝐢𝐧𝐝𝐢𝐧𝐠 𝐀 𝐒𝐨𝐧𝐠 🎶 𝐏𝐥𝐞𝐚𝐬𝐞 𝐖𝐚𝐢𝐭 ⏳️ 𝐅𝐨𝐫 𝐅𝐞𝐰 𝐒𝐞𝐜𝐨𝐧𝐝𝐬")
     try:
